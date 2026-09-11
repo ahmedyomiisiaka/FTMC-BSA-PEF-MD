@@ -61,3 +61,27 @@ The next step is to prepare a single BSA monomer for an initial
 control simulation. Decisions about removal of crystallographic
 waters, PGE and other non-protein components will be documented
 rather than performed automatically.
+
+## Initial inspection of PDB 4F5S
+
+The downloaded coordinate file was inspected programmatically using
+`scripts/01_inspect_pdb.py`.
+
+The structure contains two BSA chains:
+
+- Chain A: 583 amino-acid residues, residues 1–583
+- Chain B: 583 amino-acid residues, residues 1–583
+
+The file contains 34 SSBOND records, corresponding to 17 disulfide
+bonds per protein chain.
+
+A PGE (triethylene glycol) molecule is present as residue 601 in
+chain A.
+
+The structure also contains crystallographic water molecules:
+166 associated with chain A and 161 associated with chain B.
+
+Because the preferred biological assembly is monomeric, a single
+BSA chain will be prepared for the initial baseline MD workflow.
+The original downloaded PDB file will remain unchanged in
+`data/raw/`.
