@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary/editor files
+*.tmp
+*.bak
+*.swp
+*~
+
+# GROMACS auto-backup files
+#*
+
+# Large molecular-dynamics outputs
+*.trr
+*.xtc
+*.edr
+*.cpt
+
+# Large/generated output folders
+simulations/**/output/
+simulations/**/trajectory/
+analysis/tmp/
+analysis/cache/
+
+# Private/unpublished host data
+data/private/
+data/experimental_unpublished/
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
