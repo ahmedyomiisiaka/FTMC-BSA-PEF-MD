@@ -43,3 +43,16 @@ data/experimental_unpublished/
 *.zip
 *.tar
 *.tar.gz
+
+# Additional GROMACS generated files
+\#*#
+*.tpr
+mdout.mdp
+
+# Regenerable intermediate GROMACS coordinate files
+simulations/**/bsa_box.gro
+simulations/**/bsa_processed.gro
+simulations/**/bsa_solv.gro
+simulations/**/bsa_solv_ions.gro
+simulations/**/em.gro
+simulations/**/nvt.gro
