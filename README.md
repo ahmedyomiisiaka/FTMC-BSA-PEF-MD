@@ -4,7 +4,7 @@
 
 This repository contains the computational work performed during my internship at the Center for Physical Sciences and Technology (FTMC), Vilnius.
 
-The project investigates how external electric fields may influence the structure and conformational dynamics of bovine serum albumin (BSA). A baseline molecular-dynamics control system is being established first. Later electric-field simulations will be compared with this control and interpreted alongside relevant experimental observations.
+To investigate and compare the molecular response of BSA under electric-field conditions motivated by experimental microsecond and nanosecond PEF studies, with particular attention to electric-field strength, pulse regime and potentially energy-normalized comparisons.
 
 ## Internship
 
