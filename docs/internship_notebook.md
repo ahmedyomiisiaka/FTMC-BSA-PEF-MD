@@ -357,3 +357,136 @@ electric-field simulations are performed. Later electric-field MD
 conditions will be interpreted as computational perturbations and
 will not be assumed to be numerically equivalent to experimental
 PEF exposure.
+---
+
+## 26 September 2026 — Microsecond PEF-to-MD Translation and Pilot Planning
+
+### Objective
+
+Define a scientifically defensible strategy for investigating the
+microsecond PEF experiments computationally before starting production
+electric-field MD.
+
+The microsecond regime is being considered first, following the
+internship research direction. Nanosecond PEF will be investigated
+later using the same BSA model and core analysis framework so that the
+two experimental regimes can eventually be compared.
+
+### Experimental anchor
+
+The primary microsecond experimental reference is Taha et al. (2022),
+which investigated BSA/starch under PEF conditions including:
+
+- Pulse duration: 50 μs
+- Number of pulses: 10
+- Electric-field strengths: 3.5, 4.5, 5.7 and 8.1 kV/cm
+
+These correspond to:
+
+- 3.5 kV/cm = 0.00035 V/nm
+- 4.5 kV/cm = 0.00045 V/nm
+- 5.7 kV/cm = 0.00057 V/nm
+- 8.1 kV/cm = 0.00081 V/nm
+
+The cumulative nominal field-on time for 10 × 50 μs pulses is
+500 μs.
+
+### Important timescale distinction
+
+The experimental pulse duration and the MD trajectory duration are
+different quantities.
+
+For example:
+
+- 50 μs experimental pulse = 50,000 ns
+- 30 ns MD trajectory = 0.03 μs
+
+Therefore, an MD trajectory lasting tens of nanoseconds must not be
+described as a direct simulation of a 50 μs experimental pulse.
+
+The current computational work is instead described as an MD
+investigation motivated by the experimental microsecond-PEF study.
+
+### Experimental-to-MD interpretation
+
+The initial BSA-only simulations will not directly reproduce the full
+BSA/starch experiment.
+
+The following relationships will be used cautiously:
+
+- DLS particle size → Rg may provide information about molecular
+  compactness, but Rg is not equivalent to DLS particle size.
+- Surface hydrophobicity → hydrophobic SASA may provide an indirect
+  molecular interpretation.
+- Intrinsic fluorescence → local aromatic-residue environment,
+  contacts and solvent exposure may provide indirect interpretation.
+- Grafting/glycation → not directly represented in the initial
+  BSA-only classical MD system.
+- Solubility and emulsifying properties → macroscopic properties
+  without direct single-protein MD equivalents.
+
+Additional MD analyses will include RMSD, RMSF, intramolecular
+hydrogen bonds, secondary structure and protein dipole response.
+
+### Pilot simulation concept
+
+A small pilot is planned before any larger production simulation
+campaign.
+
+The current concept contains:
+
+1. A no-field BSA control.
+2. An experimental-scale electric-field condition anchored to the
+   2022 microsecond study.
+3. A literature-supported mechanistic electric-field condition that
+   can help determine whether BSA shows detectable molecular response
+   on an accessible atomistic-MD timescale.
+
+The stronger mechanistic condition, if used, will not be described as
+a numerical or temporal equivalent of the experimental 50 μs pulse.
+
+Candidate values discussed during planning include 0.00057 V/nm as an
+experimental-field anchor and 0.0012 V/nm as a BSA-specific
+literature-supported comparison condition.
+
+These remain candidate pilot parameters and are not yet finalized
+production conditions.
+
+### Field direction and electrical response
+
+The external electric field is a vector. BSA orientation and its
+molecular dipole may therefore influence the observed response.
+
+The pilot analysis should distinguish between:
+
+- orientational/electrostatic response to the field; and
+- persistent structural changes in the protein.
+
+Dipole magnitude/components and, where appropriate, the angle between
+the protein dipole and the applied field will therefore be considered
+alongside structural metrics.
+
+### Computing considerations
+
+The current local GROMACS installation is CPU-only and previously
+achieved approximately 1.1 ns/day for the solvated BSA system.
+
+Longer production simulations and replicate simulations would
+therefore benefit substantially from GPU/server resources.
+
+FTMC GPU access is currently being investigated. In the meantime,
+protocol preparation, documentation, short validation tests and
+analysis planning can continue locally.
+
+### Current decision point
+
+No long production electric-field simulation will be launched yet.
+
+The next computational step is to inspect the existing control
+production configuration, validate the control workflow, verify the
+electric-field implementation for GROMACS 2023.3, and then prepare a
+small microsecond-experiment-inspired pilot.
+
+The exact production trajectory duration, electric-field conditions,
+pulse representation and replicate strategy will be finalized only
+after the pilot design and computational resources have been checked.

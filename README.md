@@ -4,7 +4,9 @@
 
 This repository contains the computational work performed during my internship at the Center for Physical Sciences and Technology (FTMC), Vilnius.
 
-The project investigates how external electric fields may influence the structure and conformational dynamics of bovine serum albumin (BSA). A baseline molecular-dynamics control system is being established first. Later electric-field simulations will be compared with this control and interpreted alongside relevant experimental observations.
+The project investigates how external electric fields may influence the structure and conformational dynamics of bovine serum albumin (BSA). A baseline molecular-dynamics (MD) control system is established first. Electric-field simulations will subsequently be compared with this control and interpreted alongside relevant experimental observations.
+
+The current research stage focuses on the microsecond PEF regime. The nanosecond PEF regime will be investigated subsequently so that possible differences in BSA molecular response can be examined using a consistent computational framework.
 
 ## Internship
 
@@ -16,7 +18,9 @@ The project investigates how external electric fields may influence the structur
 
 ## Research question
 
-How does pulsed electric-field exposure affect the structure and conformational dynamics of bovine serum albumin, and can molecular dynamics simulations help explain relevant experimental observations?
+How does pulsed electric-field exposure affect the structure and conformational dynamics of bovine serum albumin, and can molecular-dynamics simulations help interpret relevant experimental observations?
+
+The project initially investigates experimental microsecond PEF conditions and will later examine nanosecond PEF conditions to determine whether the two regimes are associated with distinguishable molecular responses in BSA.
 
 ## Project objectives
 
@@ -25,9 +29,11 @@ How does pulsed electric-field exposure affect the structure and conformational 
 3. Select and validate a suitable experimental BSA structure.
 4. Prepare a reproducible all-atom BSA simulation system.
 5. Establish a baseline control simulation without an electric field.
-6. Analyse RMSD, RMSF, radius of gyration, SASA, hydrogen bonding, secondary structure and other relevant structural properties.
-7. Investigate selected electric-field conditions only after the control workflow has been validated.
-8. Compare computational trends with relevant experimental observations where scientifically appropriate.
+6. Translate relevant experimental PEF conditions into scientifically defensible computational questions.
+7. Analyse RMSD, RMSF, radius of gyration, SASA, hydrogen bonding, secondary structure, dipole response and other relevant molecular properties.
+8. Investigate selected electric-field conditions after validation of the control workflow.
+9. Investigate the microsecond PEF regime first and the nanosecond PEF regime subsequently.
+10. Compare computational trends with relevant experimental observations without assuming direct numerical equivalence between experimental PEF exposure and atomistic MD.
 
 ## Protein and structure
 
@@ -134,10 +140,13 @@ Status: **Completed**
 
 ## NPT equilibration
 
-A 100 ps restrained NPT equilibration was performed at:
+A 100 ps restrained NPT equilibration was subsequently performed.
+
+Main conditions:
 
 - Temperature: 300 K
 - Target pressure: 1 bar
+- Duration: 100 ps
 - Thermostat: V-rescale
 - Barostat: C-rescale
 - Pressure coupling: isotropic
@@ -169,6 +178,92 @@ The reduced density drift during the final half of the trajectory and the pressu
 
 Status: **Completed**
 
+## Microsecond PEF experimental anchor
+
+The current computational-planning stage focuses on the microsecond PEF experiment reported by Taha et al. (2022).
+
+Relevant experimental conditions include:
+
+- Protein system: BSA/starch
+- Pulse duration: 50 μs
+- Number of pulses: 10
+- Electric-field strengths: 3.5, 4.5, 5.7 and 8.1 kV/cm
+
+Converted to V/nm:
+
+- 3.5 kV/cm = 0.00035 V/nm
+- 4.5 kV/cm = 0.00045 V/nm
+- 5.7 kV/cm = 0.00057 V/nm
+- 8.1 kV/cm = 0.00081 V/nm
+
+The cumulative nominal field-on time for 10 × 50 μs pulses is 500 μs.
+
+These experimental parameters provide the biological and physical reference for the current stage of the project. They are not automatically treated as directly transferable atomistic-MD parameters.
+
+## Experimental–computational interpretation
+
+Experimental PEF exposure and electric fields applied in atomistic MD can operate on substantially different timescales and field-strength regimes.
+
+The experimental pulse duration and the MD trajectory duration are therefore treated as different quantities.
+
+For example:
+
+- 50 μs experimental pulse = 50,000 ns
+- 30 ns MD trajectory = 0.03 μs
+
+Therefore, an MD trajectory lasting tens of nanoseconds must not be described as a direct simulation of a 50 μs experimental pulse.
+
+The current MD work is instead described as an investigation motivated by the experimental microsecond-PEF study.
+
+Direct numerical or temporal equivalence between experimental PEF conditions and MD electric-field parameters will not be assumed unless an appropriate physical justification is established.
+
+The initial simulation system contains BSA without starch. It therefore investigates possible molecular responses of BSA rather than directly reproducing the complete experimental BSA/starch system.
+
+## Experiment-to-MD analysis framework
+
+Experimental measurements and MD observables will be related cautiously.
+
+- DLS particle size → radius of gyration (Rg) can provide information about molecular compactness, but Rg is not equivalent to hydrodynamic particle size.
+- Surface hydrophobicity → hydrophobic SASA can provide an indirect measure of changes in hydrophobic exposure.
+- Intrinsic fluorescence → local aromatic-residue environments, contacts and solvent exposure may provide indirect structural interpretation.
+- Grafting/glycation → not directly represented in the initial BSA-only classical MD system.
+- Protein solubility → no direct single-protein MD equivalent.
+- Emulsifying properties and stability → no direct single-BSA MD equivalent.
+
+Additional MD analyses will include:
+
+- RMSD
+- RMSF
+- Radius of gyration (Rg)
+- Solvent-accessible surface area (SASA)
+- Intramolecular hydrogen bonds
+- Secondary structure
+- Protein dipole response
+- Field-related orientational behaviour where appropriate
+
+No individual metric will by itself be treated as proof of protein unfolding or destabilization. Structural interpretation will be based on combined evidence relative to the no-field control.
+
+## Pilot simulation strategy
+
+A small pilot study is planned before a larger production simulation campaign.
+
+The current concept includes:
+
+1. A no-field BSA control.
+2. An experimental-scale electric-field condition anchored to the 2022 microsecond PEF study.
+3. A literature-supported mechanistic electric-field condition to investigate whether BSA shows a detectable molecular response on an accessible atomistic-MD timescale.
+
+Candidate values considered during planning include:
+
+- 0.00057 V/nm as an experimental-field anchor.
+- 0.0012 V/nm as a BSA-specific literature-supported comparison condition.
+
+These are candidate pilot parameters and are **not yet finalized production conditions**.
+
+Any stronger mechanistic condition will not be described as numerically or temporally equivalent to the experimental 50 μs treatment.
+
+Field direction and BSA dipole orientation will also be considered when implementing and analysing electric-field simulations.
+
 ## Current project status
 
 Completed:
@@ -187,33 +282,39 @@ Completed:
 - Energy minimization
 - NVT equilibration
 - NPT equilibration
+- Experimental-to-MD translation for the microsecond PEF study
+- Identification of the experimental μs-PEF field range and timescale limitation
+- Definition of the initial structural and electrostatic analysis framework
+- Development of an initial pilot-simulation concept
+
+Current focus:
+
+- Microsecond PEF is being investigated first.
+- The 2022 BSA/starch experiment is the primary experimental anchor for this stage.
+- Experimental pulse duration and MD trajectory duration are treated as distinct quantities.
+- Candidate pilot conditions are being evaluated before production simulations are launched.
+- GPU/server resources are being considered for longer trajectories and replicate simulations.
 
 Not yet started:
 
 - Production control MD
 - Production trajectory analysis
-- Electric-field MD simulations
-- Control-versus-electric-field comparison
+- Production electric-field MD simulations
+- Nanosecond-PEF simulation stage
+- Final microsecond-versus-nanosecond comparison
 
-## Planned structural analyses
+## Computing considerations
 
-After production trajectories are available, planned analyses include:
+The current local GROMACS installation is CPU-only.
 
-- RMSD
-- RMSF
-- Radius of gyration
-- Solvent-accessible surface area (SASA)
-- Hydrogen bonding
-- Secondary structure
-- Dipole-related properties where appropriate
+For the approximately 100,000-atom solvated BSA system, previous equilibration performance was approximately:
 
-## Experimental–computational interpretation
+- NVT: 1.143 ns/day
+- NPT: 1.077 ns/day
 
-Experimental pulsed electric fields and electric fields applied in atomistic MD simulations operate on different field-strength and timescale regimes.
+Longer production trajectories and replicate simulations would therefore benefit substantially from GPU/server resources.
 
-Therefore, direct numerical equivalence between experimental PEF conditions and MD electric-field parameters will not be assumed.
-
-The computational simulations will instead be used to investigate possible molecular responses and structural trends that may help interpret experimental observations.
+Protocol development, documentation, short validation tests and analysis preparation can continue locally while additional computing resources are being investigated.
 
 ## Repository structure
 
@@ -238,7 +339,9 @@ scripts/
 simulations/
     control/
         setup/
+        production/
     electric_field/
 
 analysis/
+
 figures/
