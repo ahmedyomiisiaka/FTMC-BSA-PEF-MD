@@ -490,3 +490,64 @@ small microsecond-experiment-inspired pilot.
 The exact production trajectory duration, electric-field conditions,
 pulse representation and replicate strategy will be finalized only
 after the pilot design and computational resources have been checked.
+
+---
+
+## 13 October 2026 — Preliminary Electric-Field MD Progress
+
+### Objective
+
+Evaluate the initial behaviour of solvated bovine serum albumin
+under an externally applied electric field using GROMACS.
+
+### Simulation setup
+
+- Protein: BSA, PDB 4F5S, processed chain A
+- Force field: AMBER99SB-ILDN
+- Water model: TIP3P
+- Salt concentration: nominal 0.15 M NaCl
+- Temperature target: 300 K
+- GROMACS version: 2023.3
+- Planned simulation duration: 5 ns
+- Integration time step: 2 fs
+- Total simulation steps: 2,500,000
+
+### Applied electric field
+
+- Field direction: X-axis
+- Field strength: 0.00057 V/nm (5.7 kV/cm)
+- Field implementation: constant external electric field
+
+This preliminary simulation is motivated by experimental
+microsecond-PEF conditions but does not reproduce the experimental
+50-microsecond pulses or their cumulative exposure duration.
+
+### Computational execution
+
+The simulation is running on a personal laptop using a
+CPU-only GROMACS installation with two OpenMP threads.
+
+Checkpoint-based continuation is used to preserve progress
+between computing sessions.
+
+### Progress
+
+At the latest recorded check:
+
+- Completed steps: 596,500
+- Simulated time: 1.193 ns
+- Planned duration: 5 ns
+- Completion: 23.86%
+- Instantaneous temperature: 300.53 K
+
+The simulation remains ongoing.
+
+### Pending work
+
+1. Complete the preliminary 5-ns electric-field simulation.
+2. Run the matching no-field control trajectory.
+3. Assess structural metrics including RMSD, RMSF, radius of
+   gyration, SASA, hydrogen bonds and secondary structure.
+4. Compare field-exposed BSA against the no-field control.
+5. Interpret the results with respect to the limitations of
+   accessible MD timescales.
