@@ -245,63 +245,39 @@ No individual metric will by itself be treated as proof of protein unfolding or 
 
 ## Pilot simulation strategy
 
-A small pilot study is planned before a larger production simulation campaign.
+The initial electric-field pilot has been completed using GROMACS 2023.3.
 
-The current concept includes:
-
-1. A no-field BSA control.
-2. An experimental-scale electric-field condition anchored to the 2022 microsecond PEF study.
-3. A literature-supported mechanistic electric-field condition to investigate whether BSA shows a detectable molecular response on an accessible atomistic-MD timescale.
-
-Candidate values considered during planning include:
-
-- 0.00057 V/nm as an experimental-field anchor.
-- 0.0012 V/nm as a BSA-specific literature-supported comparison condition.
-
-These are candidate pilot parameters and are **not yet finalized production conditions**.
-
-Any stronger mechanistic condition will not be described as numerically or temporally equivalent to the experimental 50 μs treatment.
-
-Field direction and BSA dipole orientation will also be considered when implementing and analysing electric-field simulations.
+- Electric field: 0.00057 V/nm (5.7 kV/cm), constant along X-axis.
+- Original pilot: 4.02 ns, 403 frames.
+- Recovery: 100 ps re-equilibration and 0.98 ns production, 99 frames.
+- Recovery used regenerated velocities after a checkpoint problem.
+- These are separate production segments, not an uninterrupted trajectory.
+- A matched no-electric-field control is the next stage.
+- The proposed 0.0012 V/nm condition has not yet been simulated.
 
 ## Current project status
 
-Completed:
+### Completed
 
-- Literature review and evidence collection
-- BSA identification and sequence preparation
-- PDB 4F5S structural inspection
-- Monomer extraction
-- Disulfide-bond validation
-- Canonical sequence restoration
-- 100% mature-sequence validation
-- MD topology generation
-- Periodic-box construction
-- Solvation
-- Neutralization and 0.15 M NaCl setup
-- Energy minimization
-- NVT equilibration
-- NPT equilibration
-- Experimental-to-MD translation for the microsecond PEF study
-- Identification of the experimental μs-PEF field range and timescale limitation
-- Definition of the initial structural and electrostatic analysis framework
-- Development of an initial pilot-simulation concept
+- BSA structure preparation, sequence validation and topology generation.
+- Energy minimization, NVT and NPT equilibration.
+- Original 4.02 ns electric-field pilot.
+- Separate 0.98 ns recovery production.
+- RMSD, Rg, RMSF, hydrogen-bond, SASA and DSSP analyses.
+- Fourteen structural-analysis figures.
 
-Current focus:
+### Current focus
 
-- Microsecond PEF is being investigated first.
-- The 2022 BSA/starch experiment is the primary experimental anchor for this stage.
-- Experimental pulse duration and MD trajectory duration are treated as distinct quantities.
-- Candidate pilot conditions are being evaluated before production simulations are launched.
-- GPU/server resources are being considered for longer trajectories and replicate simulations.
+- Validate the SASA atomic-radii assignments.
+- Organize scripts, figures and numerical results.
+- Prepare the matched no-electric-field control.
 
-Not yet started:
+### Future work
 
-- Production control MD
-- Production trajectory analysis
-- Production electric-field MD simulations
-- Nanosecond-PEF simulation stage
-- Final microsecond-versus-nanosecond comparison
+- Compare electric-field and no-field trajectories.
+- Longer simulations and independent replicates.
+- Protein orientation and dipole-response analysis.
+- Pulsed-field studies where feasible.
 
 ## Computing considerations
 
@@ -318,30 +294,199 @@ Protocol development, documentation, short validation tests and analysis prepara
 
 ## Repository structure
 
-```text
-docs/
-    internship_notebook.md
-    md_simulation_log.md
+The repository contains the following main directories:
 
-data/
-    raw/
-    processed/
+- `docs/`: research notes and simulation documentation.
+- `data/`: BSA input structures and processed data.
+- `scripts/`: structure-preparation scripts.
+- `simulations/control/`: no-field setup and test files.
+- `simulations/microsecond_pef/pilot/`: original field simulation.
+- `simulations/microsecond_pef/recovery_20261022/`: recovery segment.
+- `analysis/electric_field/pilot_4ns/`: original pilot analysis.
+- `analysis/electric_field/scripts/`: recovery plotting scripts.
+- `analysis/electric_field/results/`: recovery numerical results.
+- `figures/electric_field/`: analysis figures.
 
-scripts/
-    01_inspect_pdb.py
-    02_extract_bsa_monomer.py
-    03_validate_bsa_monomer.py
-    04_check_disulfides.py
-    05_compare_sequence_to_pdb.py
-    06_restore_canonical_variant.py
-    extract_mature_bsa.py
+Large simulation trajectories and checkpoints are excluded from Git.
 
-simulations/
-    control/
-        setup/
-        production/
-    electric_field/
+---
 
-analysis/
+## BSA Molecular Dynamics Under a Constant Electric Field
 
-figures/
+### Research objective
+
+This pilot study investigates the conformational behavior of bovine serum
+albumin (BSA) during molecular-dynamics simulation under an applied electric
+field.
+
+Structural properties are assessed using backbone RMSD, radius of gyration,
+residue RMSF, intramolecular hydrogen bonds, solvent-accessible surface area,
+and DSSP secondary-structure assignments.
+
+The ultimate objective is to compare electric-field and matched no-field
+simulations to investigate whether the applied field is associated with
+changes in BSA structure and dynamics.
+
+### Simulation conditions
+
+| Parameter | Setting |
+|---|---|
+| Molecular-dynamics software | GROMACS 2023.3 |
+| Protein | Bovine serum albumin (BSA), 583 residues |
+| Force field | AMBER99SB-ILDN |
+| Water model | TIP3P |
+| Temperature | 300 K |
+| Target pressure | 1 bar |
+| Electric field | 0.00057 V/nm (5.7 kV/cm) |
+| Field direction | X-axis |
+| Field type | Constant, not pulsed |
+| Original pilot trajectory | 4.02 ns, 403 frames |
+| Recovery re-equilibration | 100 ps |
+| Recovery production | 0.98 ns, 99 frames |
+
+### Important simulation history
+
+The original electric-field pilot produced a trajectory covering 0–4.02 ns.
+
+A checkpoint compatibility problem prevented direct continuation. The final
+coordinates from the original pilot were used to prepare a new simulation
+with regenerated velocities and a 100 ps re-equilibration stage.
+
+A separate 980 ps recovery production segment was subsequently completed,
+covering simulation times 4.12–5.10 ns.
+
+**The original pilot and recovery production are not one uninterrupted
+trajectory.** Their results are reported separately.
+
+### Structural analysis results
+
+The values below are descriptive statistics from the respective trajectories.
+
+| Measurement | Original pilot (4.02 ns) | Recovery (0.98 ns) |
+|---|---:|---:|
+| Frames analyzed | 403 | 99 |
+| Mean backbone RMSD (nm) | 0.2078 | 0.1482 |
+| Mean radius of gyration (nm) | 2.7472 | 2.7486 |
+| Mean residue RMSF (nm) | 0.1351 | 0.0872 |
+| Mean intramolecular hydrogen bonds | 483.682 | 485.85 |
+| Mean SASA, 240 dots (nm²) | 295.553 | 294.334 |
+| Alpha-helix assignments (%) | 65.36 | 65.12 |
+
+RMSD values use segment-specific reference structures. RMSF depends on the
+sampling interval and simulation duration. These quantities should not be
+interpreted as direct evidence that one segment is more stable than the other.
+
+The original pilot exhibited elevated residue RMSF around residues 559–568.
+Both segments showed predominantly alpha-helical DSSP assignments.
+
+The results do not establish that the electric field caused stabilization,
+destabilization, or unfolding. A matched no-field control and longer,
+preferably replicated simulations are required.
+
+### SASA calculation limitation
+
+SASA was calculated using a solvent probe radius of 0.14 nm and 240 sampling
+dots per sphere.
+
+GROMACS warned that atomic van der Waals radii and masses were estimated
+from residue and atom names. The absolute SASA values therefore remain
+provisional until the atomic-radius assignments are validated.
+
+### Original pilot figures (0–4.02 ns)
+
+#### Backbone RMSD
+
+![Original pilot backbone RMSD](figures/electric_field/rmsd_pilot_4ns.png)
+
+#### Radius of gyration
+
+![Original pilot radius of gyration](figures/electric_field/rg_pilot_4ns.png)
+
+#### Residue RMSF
+
+![Original pilot residue RMSF](figures/electric_field/rmsf_pilot_4ns.png)
+
+#### Intramolecular hydrogen bonds
+
+![Original pilot hydrogen bonds](figures/electric_field/hbonds_pilot_4ns.png)
+
+#### Solvent-accessible surface area
+
+![Original pilot SASA](figures/electric_field/sasa_pilot_4ns.png)
+
+#### Secondary-structure composition
+
+![Original pilot secondary-structure composition](figures/electric_field/secondary_structure_composition_pilot_4ns.png)
+
+#### Secondary-structure evolution
+
+![Original pilot secondary-structure heatmap](figures/electric_field/secondary_structure_heatmap_pilot_4ns.png)
+
+### Recovery production figures (4.12–5.10 ns)
+
+#### Backbone RMSD
+
+![Recovery backbone RMSD](figures/electric_field/rmsd_recovery.png)
+
+#### Radius of gyration
+
+![Recovery radius of gyration](figures/electric_field/rg_recovery.png)
+
+#### Residue RMSF
+
+![Recovery residue RMSF](figures/electric_field/rmsf_recovery.png)
+
+#### Intramolecular hydrogen bonds
+
+![Recovery hydrogen bonds](figures/electric_field/hbonds_recovery.png)
+
+#### Solvent-accessible surface area
+
+![Recovery SASA](figures/electric_field/sasa_recovery.png)
+
+**Note:** The recovery SASA figure was originally generated using 24 sampling
+dots per sphere. A separate 240-dot calculation is available in the results
+directory and is used for the comparison table above.
+
+#### Secondary-structure composition
+
+![Recovery secondary-structure composition](figures/electric_field/secondary_structure_composition.png)
+
+#### Secondary-structure evolution
+
+![Recovery secondary-structure heatmap](figures/electric_field/secondary_structure_heatmap.png)
+
+### Analysis and reproducibility
+
+Original pilot numerical results and plotting scripts:
+
+`analysis/electric_field/pilot_4ns/`
+
+Recovery plotting scripts:
+
+`analysis/electric_field/scripts/`
+
+Recovery numerical results:
+
+`analysis/electric_field/results/`
+
+Figures:
+
+`figures/electric_field/`
+
+Original GROMACS simulation files are retained locally under:
+
+`simulations/microsecond_pef/`
+
+Large trajectories, checkpoints, and binary simulation files are excluded
+from GitHub through `.gitignore`.
+
+### Next steps
+
+1. Validate SASA atomic-radius assignments.
+2. Complete documentation and reproducibility checks.
+3. Inspect and prepare the matched no-electric-field control.
+4. Analyze no-field trajectories using equivalent methods.
+5. Compare electric-field and no-field results.
+6. Extend sampling and consider independent simulation replicates.
+7. Investigate pulsed electric-field protocols in future work.

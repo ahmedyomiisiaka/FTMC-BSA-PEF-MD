@@ -1,0 +1,45 @@
+           :-) GROMACS - gmx sasa, 2023.3-Ubuntu_2023.3_1ubuntu3 (-:
+
+Executable:   /usr/bin/gmx
+Data prefix:  /usr
+Working dir:  /mnt/c/Users/BN/FTMC-BSA-PEF-MD
+Command line:
+  gmx sasa -s simulations/microsecond_pef/pilot/md_pef_5ns.tpr -f analysis/electric_field/pilot_4ns/md_pilot_fitted.xtc -o analysis/electric_field/pilot_4ns/sasa_pilot_4ns.xvg -surface 'group "Protein"' -probe 0.14 -ndots 240
+
+Reading file simulations/microsecond_pef/pilot/md_pef_5ns.tpr, VERSION 2023.3-Ubuntu_2023.3_1ubuntu3 (single precision)
+Reading file simulations/microsecond_pef/pilot/md_pef_5ns.tpr, VERSION 2023.3-Ubuntu_2023.3_1ubuntu3 (single precision)
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+Frank Eisenhaber and Philip Lijnzaad and Patrick Argos and Chris Sander and
+Michael Scharf
+The Double Cube Lattice Method: Efficient Approaches to Numerical Integration
+of Surface Area and Volume and to Dot Surface Contouring of Molecular
+Assemblies
+J. Comp. Chem. 16 (1995) pp. 273-284
+-------- -------- --- Thank You --- -------- --------
+
+
+WARNING: Masses and atomic (Van der Waals) radii will be guessed
+         based on residue and atom names, since they could not be
+         definitively assigned from the information in your input
+         files. These guessed numbers might deviate from the mass
+         and radius of the atom type. Please check the output
+         files if necessary. Note, that this functionality may
+         be removed in a future GROMACS version. Please, consider
+         using another file format for your input.
+
+NOTE: From version 5.0 gmx sasa uses the Van der Waals radii
+from the source below. This means the results may be different
+compared to previous GROMACS versions.
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+A. Bondi
+van der Waals Volumes and Radii
+J. Phys. Chem. 68 (1964) pp. 441-451
+-------- -------- --- Thank You --- -------- --------
+
+Reading frame       0 time    0.000   Reading frame       1 time   10.000   Reading frame       2 time   20.000   Reading frame       3 time   30.000   Reading frame       4 time   40.000   Reading frame       5 time   50.000   Reading frame       6 time   60.000   Reading frame       7 time   70.000   Reading frame       8 time   80.000   Reading frame       9 time   90.000   Reading frame      10 time  100.000   Reading frame      11 time  110.000   Reading frame      12 time  120.000   Reading frame      13 time  130.000   Reading frame      14 time  140.000   Reading frame      15 time  150.000   Reading frame      16 time  160.000   Reading frame      17 time  170.000   Reading frame      18 time  180.000   Reading frame      19 time  190.000   Reading frame      20 time  200.000   Reading frame      30 time  300.000   Reading frame      40 time  400.000   Reading frame      50 time  500.000   Reading frame      60 time  600.000   Reading frame      70 time  700.000   Reading frame      80 time  800.000   Reading frame      90 time  900.000   Reading frame     100 time 1000.000   Reading frame     110 time 1100.000   Reading frame     120 time 1200.000   Reading frame     130 time 1300.000   Reading frame     140 time 1400.000   Reading frame     150 time 1500.000   Reading frame     160 time 1600.000   Reading frame     170 time 1700.000   Reading frame     180 time 1800.000   Reading frame     190 time 1900.000   Reading frame     200 time 2000.000   Reading frame     300 time 3000.000   Reading frame     400 time 4000.000   
+Analyzed 403 frames, last time 4020.000
+
+GROMACS reminds you: "Everything He Lacks, He Makes Up In Denial" (Offspring)
+
