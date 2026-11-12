@@ -249,7 +249,7 @@ The initial electric-field pilot has been completed using GROMACS 2023.3.
 
 - Electric field: 0.00057 V/nm (5.7 kV/cm), constant along X-axis.
 - Original pilot: 4.02 ns, 403 frames.
-- Recovery: 100 ps re-equilibration and 0.98 ns production, 99 frames.
+- Additional field-on segments: 100 ps re-equilibration and 0.98 ns production, with 99 analysed frames.
 - Recovery used regenerated velocities after a checkpoint problem.
 - These are separate production segments, not an uninterrupted trajectory.
 - A matched no-electric-field control is the next stage.
@@ -262,7 +262,7 @@ The initial electric-field pilot has been completed using GROMACS 2023.3.
 - BSA structure preparation, sequence validation and topology generation.
 - Energy minimization, NVT and NPT equilibration.
 - Original 4.02 ns electric-field pilot.
-- Separate 0.98 ns recovery production.
+- Separate 0.98 ns constant-field production segment.
 - RMSD, Rg, RMSF, hydrogen-bond, SASA and DSSP analyses.
 - Fourteen structural-analysis figures.
 
@@ -341,8 +341,8 @@ changes in BSA structure and dynamics.
 | Field direction | X-axis |
 | Field type | Constant, not pulsed |
 | Original pilot trajectory | 4.02 ns, 403 frames |
-| Recovery re-equilibration | 100 ps |
-| Recovery production | 0.98 ns, 99 frames |
+| Additional field-on re-equilibration | 100 ps |
+| Additional constant-field production | 0.98 ns, 99 frames |
 
 ### Important simulation history
 
@@ -352,17 +352,17 @@ A checkpoint compatibility problem prevented direct continuation. The final
 coordinates from the original pilot were used to prepare a new simulation
 with regenerated velocities and a 100 ps re-equilibration stage.
 
-A separate 980 ps recovery production segment was subsequently completed,
+A separate 980 ps constant-field production segment was subsequently run,
 covering simulation times 4.12–5.10 ns.
 
-**The original pilot and recovery production are not one uninterrupted
+**The original pilot and later constant-field production are not one uninterrupted
 trajectory.** Their results are reported separately.
 
 ### Structural analysis results
 
 The values below are descriptive statistics from the respective trajectories.
 
-| Measurement | Original pilot (4.02 ns) | Recovery (0.98 ns) |
+| Measurement | Original pilot (4.02 ns) | Later field-on segment (0.98 ns) |
 |---|---:|---:|
 | Frames analyzed | 403 | 99 |
 | Mean backbone RMSD (nm) | 0.2078 | 0.1482 |
@@ -422,7 +422,7 @@ provisional until the atomic-radius assignments are validated.
 
 ![Original pilot secondary-structure heatmap](figures/electric_field/secondary_structure_heatmap_pilot_4ns.png)
 
-### Recovery production figures (4.12–5.10 ns)
+### Additional constant-field segment figures (4.12–5.10 ns)
 
 #### Backbone RMSD
 
@@ -490,3 +490,61 @@ from GitHub through `.gitignore`.
 5. Compare electric-field and no-field results.
 6. Extend sampling and consider independent simulation replicates.
 7. Investigate pulsed electric-field protocols in future work.
+
+---
+
+## Research update — 12 November 2026
+
+### Verification of the simulation conditions
+
+A review of the original GROMACS TPR files confirmed that the
+initial pilot, re-equilibration and subsequent production segment
+were all configured with a constant electric field of 0.00057 V/nm
+(5.7 kV/cm) along the X-axis.
+
+The directory and figures previously labelled "recovery" refer
+to additional constant-field simulations, not field-free recovery.
+
+The later segment was prepared separately after a checkpoint
+compatibility problem. Its exact starting-state provenance and
+continuity still require verification.
+
+The structural results are preliminary descriptive measurements.
+They do not establish whether the electric field caused BSA
+stabilization, destabilization or unfolding.
+
+### Proposed experimental PEF waveform
+
+Following an FTMC laboratory demonstration on 12 November 2026,
+a Python model was developed for a nominal 50 microsecond pulse.
+
+Provisional waveform parameters:
+
+- Rise time: 300 ns (0.3 microseconds)
+- Plateau: 48.7 microseconds
+- Fall time: 1 microsecond
+- Proposed peak field: 5.7 kV/cm (0.00057 V/nm)
+
+The peak field is a literature-based modelling choice, not a
+confirmed measurement from the laboratory demonstration.
+The plateau duration assumes the total pulse width includes
+both rising and falling edges.
+
+The waveform is an idealized computational model and has
+not yet been applied in a GROMACS pulsed-field simulation.
+
+Waveform script: `analysis/pef_waveform/plot_waveform.py`
+
+![Proposed 50 microsecond PEF waveform](figures/pef_waveform/pef_waveform_50us.png)
+
+### Research priorities
+
+1. Confirm the experimental pulse amplitude and timing.
+2. Validate a genuinely time-dependent electric-field implementation.
+3. Establish matched no-field controls and field-free recovery simulations.
+4. Verify simulation continuity and structural-analysis settings.
+5. Assess computing resources for longer simulations and replicates.
+6. Investigate BSA–EGCG interactions after validating the BSA-only model.
+
+A complete experimental 50 microsecond pulse has not yet been
+simulated using molecular dynamics.
